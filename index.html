@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+        #temperature-details{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="city" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button onclick="weather()" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div id="temperature-details" class="weather-status text-white text-center">
+            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="city-name-show"></h1>
+            <h3><span id="temperature"></span>&deg;C</h3>
+            <h1 id="condition" class="lead"></h1>
+        </div>
+    </div>
+
+    <script>
+
+        function weather() {
+            //getting city name
+            const cityName= document.getElementById('city').value;
+
+            console.log(cityName);
+
+
+            fetch('http://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=539e5b2f82e10429443fbe8ace532f53')
+                .then(response => response.json())
+                .then(data => {
+                    
+                    document.getElementById('city-name-show').innerText=data['name'];
+                    const getTemp=data['main']['temp'];
+                    const showTemp=(parseFloat(getTemp)-273.15).toFixed(1);
+                    document.getElementById('temperature').innerText= showTemp;
+                    document.getElementById('condition').innerText=data['weather'][0]['description'];
+                    document.getElementById('temperature-details').style.display="block";
+                })
+            .catch(error=>{
+                document.getElementById('temperature-details').style.display="none";
+                alert('Invalid City Name...!!');
+            })
+        }
+    </script>
+
+</body>
+
+</html>
