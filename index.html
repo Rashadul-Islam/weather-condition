@@ -48,7 +48,7 @@
             console.log(cityName);
 
 
-            fetch('http://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=539e5b2f82e10429443fbe8ace532f53')
+            fetch('https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=539e5b2f82e10429443fbe8ace532f53')
                 .then(response => response.json())
                 .then(data => {
                     
